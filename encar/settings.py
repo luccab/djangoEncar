@@ -25,12 +25,13 @@ SECRET_KEY = '%9q#p$$32l8x3#&f!^7hsykj&bo16-@#1h*omsn3jw_9^7v9_!'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['django-env.ffir2j8kde.us-east-1.elasticbeanstalk.com']
+ALLOWED_HOSTS = ['django-env.ffir2j8kde.us-east-1.elasticbeanstalk.com',"127.0.0.1"]
 
 
 # Application definition
 
 INSTALLED_APPS = [
+    'apps.apps.AppsConfig',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -54,7 +55,7 @@ ROOT_URLCONF = 'encar.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [os.path.join(BASE_DIR, 'templates')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
