@@ -4,18 +4,6 @@ import pandas as pd
 from apps.kmodes.kmodes.kprototypes import KPrototypes
 # Data taken from https://www.kaggle.com/toramky/automobile-dataset
 
-# df = pd.read_csv("/Users/admin/Documents/SK Encar/djangoEncar", sep=',',na_values='?')
-# df.head(10)
-#
-# old_names = df.columns.values
-# new_names = [name.replace('-','_') for name in old_names]
-# df.rename(columns = dict(zip(old_names, new_names)), inplace = True)
-# df.columns.values
-#
-# df = df.dropna(subset = ['price', 'drive_wheels','highway_mpg', 'city_mpg','body_style','horsepower',
-#                            'num_of_doors','aspiration'])
-# df.head(10)
-
 def first_stage(df, price, drive_wheels):
     """
     Recommends a list of cars that satisfies the specified price and drive_wheels
@@ -31,10 +19,7 @@ def first_stage(df, price, drive_wheels):
     mask_drive_wheels = df.drive_wheels
     filtered = df[(price[0] <= df.price) &(df.price <= price[1]) & (df.drive_wheels.isin(drive_wheels))]
     return filtered
-    # return 'fsdss'
-# Test
-# fil1 = first_stage(df, (10000,30000), ['rwd','fwd'])
-# fil1
+
 
 def second_stage(df, num_of_doors, aspiration):
     """
@@ -61,11 +46,6 @@ def second_stage(df, num_of_doors, aspiration):
     df = df.assign(ranks=pd.Series(ranks).values)
     filtered = df.nlargest(int(1/2*len(df.index)), 'ranks', 'first').drop(axis=1, columns='ranks')
     return filtered
-# Test
-# fil2 = second_stage(fil1, (2,3), ['turbo'])
-# fil2
-
-
 
 # kmodes library: https://github.com/nicodv/kmodes
 
@@ -87,9 +67,5 @@ def third_stage(df, highway_mpg, city_mpg, body_style, horsepower):
     X_df[[0,1,3]]=X_df[[0,1,3]].astype('float')
     X_test = X_df.values
     labels = kproto.predict(X_test, categorical=[2])
-    # fil_mask = fil2.assign(cluster=clusters)
     fil_mask = df.assign(cluster=clusters)
     return fil_mask[fil_mask.cluster==labels[0]].drop(axis=1, columns='cluster')
-# Test
-# fil3 = third_stage(fil2, (20,30), (30,50), 'hatchback', (120,150))
-# fil3
