@@ -31,6 +31,7 @@ def first_stage(df, price, drive_wheels):
     mask_drive_wheels = df.drive_wheels
     filtered = df[(price[0] <= df.price) &(df.price <= price[1]) & (df.drive_wheels.isin(drive_wheels))]
     return filtered
+    # return 'fsdss'
 # Test
 # fil1 = first_stage(df, (10000,30000), ['rwd','fwd'])
 # fil1
@@ -86,7 +87,8 @@ def third_stage(df, highway_mpg, city_mpg, body_style, horsepower):
     X_df[[0,1,3]]=X_df[[0,1,3]].astype('float')
     X_test = X_df.values
     labels = kproto.predict(X_test, categorical=[2])
-    fil_mask = fil2.assign(cluster=clusters)
+    # fil_mask = fil2.assign(cluster=clusters)
+    fil_mask = df.assign(cluster=clusters)
     return fil_mask[fil_mask.cluster==labels[0]].drop(axis=1, columns='cluster')
 # Test
 # fil3 = third_stage(fil2, (20,30), (30,50), 'hatchback', (120,150))
