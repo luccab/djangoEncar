@@ -78,15 +78,15 @@ def get_data(request):
             data = form.cleaned_data
         # price = (float(data['price lower']),float(data['price upper']))
         # price = data['price_lower']
-            price = tuple([data['price_lower'], data['price_upper']])
+            price = tuple([float(num.strip()) for num in data['price'].split(',')])
             drive_wheels = data['drive_wheels'].split(',')
             fil1 = apps.algo.first_stage(df, price, drive_wheels)
-            num_of_doors = tuple([data['num_of_doors_lower'], data['num_of_doors_upper']])
+            num_of_doors = tuple([float(num.strip()) for num in data['num_of_doors'].split(',')])
             aspiration = data['aspiration'].split(',')
             fil2 = apps.algo.second_stage(fil1, num_of_doors, aspiration)
-            highway_mpg = tuple([data['highway_mpg_lower'], data['highway_mpg_upper']])
-            city_mpg = tuple([data['city_mpg_lower'], data['city_mpg_upper']])
-            horsepower = tuple([data['horsepower_lower'], data['horsepower_upper']])
+            highway_mpg = tuple([float(num.strip()) for num in data['highway_mpg'].split(',')])
+            city_mpg = tuple([float(num.strip()) for num in data['city_mpg'].split(',')])
+            horsepower = tuple([float(num.strip()) for num in data['horsepower'].split(',')])
             body_style = data['body_style']
             fil3 = apps.algo.third_stage(fil2, highway_mpg, city_mpg, body_style, horsepower)
 
