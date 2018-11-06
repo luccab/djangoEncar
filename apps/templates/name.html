@@ -1,4 +1,4 @@
-{% load static %}
+
 <!DOCTYPE html>
 <html lang="en">
 <title>Minerva Encar Project</title>
@@ -52,6 +52,7 @@ html,body,h1,h2,h3,h4,h5,h6 {font-family: "Roboto", sans-serif;}
 <div class="w3-overlay w3-hide-large" onclick="w3_close()" style="cursor:pointer" title="close side menu" id="myOverlay"></div>
 
 <!-- Main content: shift it to the right by 250 pixels when the sidebar is visible -->
+
 <div class="w3-main" style="margin-left:250px">
 
   <div class="w3-row w3-padding-64">
@@ -60,6 +61,7 @@ html,body,h1,h2,h3,h4,h5,h6 {font-family: "Roboto", sans-serif;}
     <form>
 
       <fieldset>
+
         <legend>Which Vehicle are you searching for?</legend>
         <p><label class="choice"> <input type="radio" name="taxi" required value="car"> Car </label></p>
         <p><label class="choice"> <input type="radio" name="taxi" required value="van"> Van </label></p>
@@ -89,6 +91,11 @@ html,body,h1,h2,h3,h4,h5,h6 {font-family: "Roboto", sans-serif;}
     </div>
 
   </div>
+  <form action="/get_name/" method="post">
+      {% csrf_token %}
+      {{ form }}
+      <input type="submit" value="ok">
+  </form>
 
   <!--
   <div class="w3-row">
@@ -167,9 +174,3 @@ function w3_close() {
 
 </body>
 </html>
-
-<!--link rel="stylesheet" type="text/css" href="{% static 'apps/form.css' %}">
-
-<h1>Hello world!!! Ahmed's edition </h1>
-
-<p class="test">Testing html and css</p-->

@@ -1,30 +1,20 @@
 import numpy as np
-import scipy as sp
-import matplotlib as mpl
-import matplotlib.cm as cm
-import matplotlib.pyplot as plt
 import pandas as pd
-import time
-pd.set_option('display.width', 500)
-pd.set_option('display.max_columns', 100)
-pd.set_option('display.notebook_repr_html', True)
-import seaborn as sns
-sns.set_style("whitegrid")
-sns.set_context("poster")
+# from kmodes.kmodes.kprototypes import KPrototypes
+from apps.kmodes.kmodes.kprototypes import KPrototypes
+# Data taken from https://www.kaggle.com/toramky/automobile-dataset
 
-# Data taen from https://www.kaggle.com/toramky/automobile-dataset
-
-df = pd.read_csv("./Automobile_data.csv", sep=',',na_values='?')
-df.head(10)
-
-old_names = df.columns.values
-new_names = [name.replace('-','_') for name in old_names]
-df.rename(columns = dict(zip(old_names, new_names)), inplace = True)
-df.columns.values
-
-df = df.dropna(subset = ['price', 'drive_wheels','highway_mpg', 'city_mpg','body_style','horsepower',
-                           'num_of_doors','aspiration'])
-df.head(10)
+# df = pd.read_csv("/Users/admin/Documents/SK Encar/djangoEncar", sep=',',na_values='?')
+# df.head(10)
+#
+# old_names = df.columns.values
+# new_names = [name.replace('-','_') for name in old_names]
+# df.rename(columns = dict(zip(old_names, new_names)), inplace = True)
+# df.columns.values
+#
+# df = df.dropna(subset = ['price', 'drive_wheels','highway_mpg', 'city_mpg','body_style','horsepower',
+#                            'num_of_doors','aspiration'])
+# df.head(10)
 
 def first_stage(df, price, drive_wheels):
     """
@@ -74,7 +64,7 @@ def second_stage(df, num_of_doors, aspiration):
 # fil2 = second_stage(fil1, (2,3), ['turbo'])
 # fil2
 
-from kmodes.kmodes.kprototypes import KPrototypes
+
 
 # kmodes library: https://github.com/nicodv/kmodes
 
