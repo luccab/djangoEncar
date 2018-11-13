@@ -1,4 +1,3 @@
-{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <title>Minerva Encar Project</title>
@@ -34,7 +33,7 @@ html,body,h1,h2,h3,h4,h5,h6 {font-family: "Roboto", sans-serif;}
   </div>
 </div>
 
-<!--Sidebar -- comment -->
+<!--Sidebar -- comment -->  
 <nav class="w3-sidebar w3-bar-block w3-collapse w3-large w3-theme-l5 w3-animate-left" id="mySidebar">
     <a href="javascript:void(0)" onclick="w3_close()" class="w3-right w3-xlarge w3-padding-large w3-hover-black w3-hide-large" title="Close Menu">
       <i class="fa fa-remove"></i>
@@ -64,14 +63,14 @@ html,body,h1,h2,h3,h4,h5,h6 {font-family: "Roboto", sans-serif;}
         <p><label class="choice"> <input type="radio" name="taxi" required value="car"> Car </label></p>
         <p><label class="choice"> <input type="radio" name="taxi" required value="van"> Van </label></p>
         <p><label class="choice"> <input type="radio" name="taxi" required value="tuktuk"> Tuk Tuk </label></p>
+      
 
-
-
+      
         <legend>Extra Features? </legend>
         <p><label class="choice"> <input type="checkbox" name="extras" value="baby"> Baby Seat </label></p>
         <p><label class="choice"> <input type="checkbox" name="extras" value="wheelchair"> Wheelchair Access </label></p>
         <p><label class="choice"> <input type="checkbox" name="extras" value="tip"> Stock Tip </label></p>
-
+      
 
         <p> Feel Free to Leave comments: </p>
 
@@ -80,14 +79,14 @@ html,body,h1,h2,h3,h4,h5,h6 {font-family: "Roboto", sans-serif;}
      </fieldset>
 
      <p><button>Submit</button></p>
-    </form>
+    </form> 
     </div>
     <div class="w3-third w3-container">
       <img class="w3-border w3-padding-large w3-padding-40 w3-center" src="bmw.png">
-
+      
       <p class="w3-border w3-padding-large w3-padding-32 w3-center">AD</p>
     </div>
-
+    
   </div>
 
   <!--
@@ -167,9 +166,3 @@ function w3_close() {
 
 </body>
 </html>
-
-<!--link rel="stylesheet" type="text/css" href="{% static 'apps/form.css' %}">
-
-<h1>Hello world!!! Ahmed's edition </h1>
-
-<p class="test">Testing html and css</p-->
