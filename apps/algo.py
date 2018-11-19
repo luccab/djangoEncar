@@ -1,6 +1,6 @@
 import numpy as np
 import pandas as pd
-# from kmodes.kmodes.kprototypes import KPrototypes
+# kmodes library: https://github.com/nicodv/kmodes
 from apps.kmodes.kmodes.kprototypes import KPrototypes
 # Data taken from https://www.kaggle.com/toramky/automobile-dataset
 
