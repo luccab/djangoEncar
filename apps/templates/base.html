@@ -11,16 +11,18 @@
         <div class="col-8">
           <h1 class="mt-2">Django People</h1>
           <hr class="mt-0 mb-4">
-          <form action="get_data" method="post">
-            <fieldset>
-              {% csrf_token %}
-              {{ form }}
-              <input type="submit" value="ok">
-            </fieldset>
-          </form>
-
+          {% block content %}
+          {% endblock %}
         </div>
       </div>
     </div>
   </body>
 </html>
+
+<form action="get_data" method="post">
+  <fieldset>
+    {% csrf_token %}
+    {{ form }}
+    <input type="submit" value="ok">
+  </fieldset>
+</form>

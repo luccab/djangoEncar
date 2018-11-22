@@ -156,3 +156,11 @@ def get_data(request):
     else:
         form = NameForm()
     return HttpResponse(fil3.to_html())
+
+
+from django.views.generic import CreateView
+from .models import Person
+
+class PersonCreateView(CreateView):
+    model = Person
+    fields = ('name', 'email', 'job_title', 'bio')
