@@ -1,5 +1,6 @@
 from django import forms
 
+
 class NameForm(forms.Form):
 
     age_groups = (('10','전부 다 쩌 쩔어(10s)'), ('20','오로나민씨(20s)'),
@@ -36,7 +37,10 @@ class NameForm(forms.Form):
     hybrid = forms.MultipleChoiceField(choices=environment_groups, widget=forms.CheckboxSelectMultiple())
 
 
+
     '''
+    num_of_doors = forms.CharField(label='Brand', help_text='Enter two numbers, \
+    separated by comma')
     num_of_doors = forms.CharField(label='Brand', help_text='Enter two numbers, \
     separated by comma')
     aspiration = forms.CharField(label='Wage')
@@ -48,7 +52,6 @@ class NameForm(forms.Form):
     separated by comma')
     body_style = forms.CharField(label='body style')
     '''
-
 
 
 
