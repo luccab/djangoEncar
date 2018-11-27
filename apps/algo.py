@@ -13,7 +13,7 @@ import time
 from kmodes.kprototypes import KPrototypes
 
 
-def second_stage(df, age1, gender, brand, table):
+def second_stage(df, age, gender, brand, wage, table):
     """
     Recommends a list of cars that satisfies the specified age and preferred brand.
     If brand is a nationality ('Korea', 'Japan', or 'Germany'), add weights to the
@@ -31,16 +31,16 @@ def second_stage(df, age1, gender, brand, table):
     """
     filtered = None
     scores = []
-    print("hello", table[(int(age1),gender)])
+    print("hello", table[(int(age),gender)])
     for index, row in df.iterrows():
         score = 0
-        if row['Model'] in table[(int(age1),gender)]:
-            score += table[(int(age1),gender)][row['Model']]
-        if brand != 'Luxury':
-            if row['Country'] == brand:
-                score += 1
-        else:
-            score += row['luxury_weight']
+        if row['Model'] in table[(int(age),gender)]:
+            score += table[(int(age),gender)][row['Model']]
+        if row['Country'] == brand:
+            score += 5
+
+        score += get_budget_price_difference(wage, row['Price'])
+
         scores.append(score)
     df = df.assign(scores=pd.Series(scores).values)
     print("DATAFIELD: ", df)
@@ -76,6 +76,7 @@ def third_stage(df, wage, car_type, small_car, hybrid):
         budget = (16931+7000)/2
 
     X_train = df[['Price','Car type', 'EV/Hybrid available' ]].values
+    print("X_train: ", X_train)
     kproto = KPrototypes(n_clusters=5, init='Huang', verbose=0)
     clusters = kproto.fit(X_train, categorical=[1,2]).labels_
     if car_type != 'NORMAL':
@@ -90,6 +91,24 @@ def third_stage(df, wage, car_type, small_car, hybrid):
     fil_mask = df.assign(cluster=clusters)
     fil_mask = fil_mask[fil_mask.cluster==labels[0]].drop(axis=1, columns='cluster')
 
-    num_rec = 3 # JUST NEED TO SPECIFY THE NUMBER OF RECOMMENDATIONS HERE
-    print("FINAL: ", fil_mask)
-    return fil_mask.nlargest(num_rec, 'scores', 'first')
+    # print("FINAL: ", fil_mask)
+    num_rec = 10 # JUST NEED TO SPECIFY THE NUMBER OF RECOMMENDATIONS HERE
+    return df.nlargest(num_rec, 'scores', 'first')
+
+
+def get_budget_price_difference(wage, price):
+    budget = 0
+    if wage == '0-15':
+        budget = 1500/2
+    elif wage == '15-30':
+        budget = (3000+1500)/2
+    elif wage == '30-60':
+        budget = (3000+6000)/2
+    elif wage == '60':
+        budget = (15000+6000)/2
+
+    diff = 3000 - abs(budget - price)
+    if diff < 0:
+        return 0
+    else:
+        return round(diff / 100, 2)

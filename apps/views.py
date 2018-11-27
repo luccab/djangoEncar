@@ -30,24 +30,15 @@ sns.set_style("whitegrid")
 sns.set_context("poster")
 
 
-df = pd.read_csv(os.path.dirname(os.path.realpath(__file__)) + '/EncarDatasetEncoded.csv', sep=',',na_values='?')
+df = pd.read_csv(os.path.dirname(os.path.realpath(__file__)) + '/EncarDatasetEncoded3.csv', sep=',',na_values='?')
 df = df.dropna(subset = ['Price']) # remove rows without data in Price column
 
 df['PRICE_RANK'] = df['Price'].rank(ascending=True)
-luxury_weights = []
-for index, row in df.iterrows():
-    if row['PRICE_RANK'] < len(df.index)/3:
-        luxury_weights.append(0)
-    elif row['PRICE_RANK'] < 2*len(df.index)/3:
-        luxury_weights.append(1)
-    else:
-        luxury_weights.append(2)
-df = df.assign(luxury_weight=pd.Series(luxury_weights).values)
 
 
 
 
-demo = pd.read_csv(os.path.dirname(os.path.realpath(__file__)) + '/demo_data.csv', sep=',',na_values='?')
+demo = pd.read_csv(os.path.dirname(os.path.realpath(__file__)) + '/demo_data2.csv', sep=',',na_values='?')
 age_approx = []
 for index, row in demo.iterrows():
     if row['Age'][0]=='~':
@@ -60,17 +51,15 @@ demo = demo.drop(demo[demo.age_approx == 'A0'].index)
 
 
 name_list = demo.columns.values
-print(name_list)
+print('NAME LIST:', name_list)
 for name in name_list[5:]:
     demo[name] = pd.to_numeric(demo[name])
-
 unique_age = list(demo['age_approx'].unique())
 unique_gender = list(demo['Gender'].unique())
 table = {}
 for age in unique_age:
     for gender in unique_gender:
         table[(age, gender)] = {}
-print(table)
 for index, row in demo.iterrows():
     num_list = []
     for name in name_list[5:-1]:
@@ -90,25 +79,31 @@ for age_gender, value in table.items():
     for model, tot in table[age_gender].items():
         if not model in list(df['Model']):
             new_dict.pop(model, None)
-    table[age_gender] = new_dict
-
-for age_gender, value in table.items():
-    table[age_gender] = list(table[age_gender].items())
-
-
-for age_gender, value in table.items():
-    sorted_scores = sorted(value, key=itemgetter(1))
-    new_dict = {}
-    for i in range(len(sorted_scores)):
-        if i <= len(sorted_scores)//3:
-            new_dict[sorted_scores[i][0]] = 0
-        elif i <= 2*len(sorted_scores)//3:
-            new_dict[sorted_scores[i][0]] = 1
-        else:
-            new_dict[sorted_scores[i][0]] = 2
-    table[age_gender] = new_dict
+    table[age_gender] = list(new_dict.items())
     print(age_gender, "=========")
-    print(new_dict)
+    print(sorted(new_dict.items(), key=lambda kv: kv[1], reverse=True))
+
+
+
+for age_gender, value in table.items():
+    sorted_scores = sorted(sorted(value, key=itemgetter(1)), key = lambda kv: kv[1], reverse=True)
+    new_dict = {}
+    length = len(sorted_scores)
+    for i in range(length):
+        new_dict[sorted_scores[i][0]] = round(30 * ((length - i)/length))
+
+    # for i in range(len(sorted_scores)):
+    #     if i <= len(sorted_scores)//3:
+    #         new_dict[sorted_scores[i][0]] = 0
+    #     elif i <= 2*len(sorted_scores)//3:
+    #         new_dict[sorted_scores[i][0]] = 20
+    #     else:
+    #         new_dict[sorted_scores[i][0]] = 40
+    table[age_gender] = new_dict
+    if age_gender == (20, 'F'):
+        print("SORTED SCORES22: ", sorted_scores)
+        print(age_gender, "=========")
+        print(new_dict)
 
 
 
@@ -139,8 +134,7 @@ def get_data(request):
             num_of_doors = tuple([float(num.strip()) for num in data['num_of_doors'].split(',')])
             aspiration = data['aspiration'].split(',')
             '''
-            print("DATA:", data)
-            fil2 = apps.algo.second_stage(df, data['age'], data['gender'], data['brand'], table)
+            fil2 = apps.algo.second_stage(df, data['age'], data['gender'], data['brand'], data['wage'], table)
 
             fil3 = apps.algo.third_stage(fil2, data['wage'], data['car_type'], data['small_car'], data['hybrid'])
 

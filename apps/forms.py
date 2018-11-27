@@ -19,7 +19,8 @@ class NameForm(forms.Form):
     brand_groups = (('Germany','옥토버페스트에서 살얼음잔에 담긴 시원한 맥주, 그릴에 익힌 소시지와 함께(Germany)'),
                 ('Korea','전주 한옥마을을 거닐며 파전과 막걸리 한 잔(Korea)'),
                ('Japan','일본 삿포로에서 불에 살짝 구운 타타키와 시원한 사케(Japan)'),
-               ('Luxury','홍콩 페닌슐라 호텔 스위트룸에서 위스키 한 잔(Luxury)'))
+               ('USA','라스베가스에서 승부수를 던지며 위스키 온더락 한 잔(USA)'),
+               ('UK','런던에서 시원한 맥주와 함께 즐기는 프리미어 리그!(UK)'))
     brand = forms.ChoiceField(label='내게 순간이동 능력이 있다면, 금요일 뜨거운 밤을 보내고 싶은 곳은?', choices=brand_groups, widget=forms.RadioSelect())
 
     type_groups = (('NORMAL','마음이 편안해지는 노래와 함께 도시 이곳 저곳을 드라이브(normal)'),
