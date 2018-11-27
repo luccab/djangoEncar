@@ -8,7 +8,7 @@ class NameForm(forms.Form):
                ('40','다 사랑스러워(40s)'))
     age = forms.ChoiceField(label='"머리부터 발끝까지" 뒤에 나오는 말은?', choices=age_groups, widget=forms.RadioSelect())
 
-    gender = forms.ChoiceField(label='당신의 성별은?', choices=(("M", "M"),("F", "F")), widget=forms.RadioSelect())
+    gender = forms.ChoiceField(label='당신의 성별은?', choices=(('M', "M"),('F', "F")), widget=forms.RadioSelect())
 
     price_groups = (('0-15','스파이더맨(~15mil)'), ('15-30','캡틴아메리카(15~30mil)'),
                ('30-60','아이언맨(30~60mil)'),

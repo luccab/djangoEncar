@@ -30,8 +30,8 @@ sns.set_style("whitegrid")
 sns.set_context("poster")
 
 
-df = pd.read_csv(os.path.dirname(os.path.realpath(__file__)) + '/datav2.csv', sep=',',na_values='?')
-df = df.dropna(subset = ['Price'])
+df = pd.read_csv(os.path.dirname(os.path.realpath(__file__)) + '/EncarDatasetEncoded.csv', sep=',',na_values='?')
+df = df.dropna(subset = ['Price']) # remove rows without data in Price column
 
 df['PRICE_RANK'] = df['Price'].rank(ascending=True)
 luxury_weights = []
@@ -45,37 +45,22 @@ for index, row in df.iterrows():
 df = df.assign(luxury_weight=pd.Series(luxury_weights).values)
 
 
-'''
-df = pd.read_csv(os.path.dirname(os.path.realpath(__file__)) + '/datav2.csv', sep=',',na_values='?')
-df.head(10)
 
-df = df.dropna(subset = ['Age', 'Gender','Country', 'Price','Car type','EV/Hybrid available'])
-df = df.dropna(subset = ['Price'])
-
-df['PRICE_RANK'] = df['Price'].rank(ascending=True)
-luxury_weights = []
-for index, row in df.iterrows():
-    if row['PRICE_RANK'] < len(df.index)/3:
-        luxury_weights.append(0)
-    elif row['PRICE_RANK'] < 2*len(df.index)/3:
-        luxury_weights.append(1)
-    else:
-        luxury_weights.append(2)
-df = df.assign(luxury_weight=pd.Series(luxury_weights).values)
-'''
 
 demo = pd.read_csv(os.path.dirname(os.path.realpath(__file__)) + '/demo_data.csv', sep=',',na_values='?')
 age_approx = []
 for index, row in demo.iterrows():
     if row['Age'][0]=='~':
-        age_approx.append('0')
+        age_approx.append('0') # ~10
     else:
         age_approx.append(row['Age'][0]+'0')
 
 demo = demo.assign(age_approx=pd.Series(age_approx).values)
 demo = demo.drop(demo[demo.age_approx == 'A0'].index)
 
+
 name_list = demo.columns.values
+print(name_list)
 for name in name_list[5:]:
     demo[name] = pd.to_numeric(demo[name])
 
@@ -85,6 +70,7 @@ table = {}
 for age in unique_age:
     for gender in unique_gender:
         table[(age, gender)] = {}
+print(table)
 for index, row in demo.iterrows():
     num_list = []
     for name in name_list[5:-1]:
@@ -96,6 +82,8 @@ for index, row in demo.iterrows():
 for age_gender, value in table.items():
     for model, num_list in value.items():
         table[age_gender][model] = np.mean(table[age_gender][model])
+    # print(age_gender, "=========")
+    # print(table[age_gender])
 
 for age_gender, value in table.items():
     new_dict = value.copy()
@@ -119,6 +107,8 @@ for age_gender, value in table.items():
         else:
             new_dict[sorted_scores[i][0]] = 2
     table[age_gender] = new_dict
+    print(age_gender, "=========")
+    print(new_dict)
 
 
 
@@ -149,10 +139,10 @@ def get_data(request):
             num_of_doors = tuple([float(num.strip()) for num in data['num_of_doors'].split(',')])
             aspiration = data['aspiration'].split(',')
             '''
+            print("DATA:", data)
+            fil2 = apps.algo.second_stage(df, data['age'], data['gender'], data['brand'], table)
 
-            fil2 = apps.algo.second_stage(df, data['age'][0], data['gender'][0], data['brand'][0], table)
-
-            fil3 = apps.algo.third_stage(fil2, data['wage'][0], data['car_type'][0], data['small_car'][0], data['hybrid'][0])
+            fil3 = apps.algo.third_stage(fil2, data['wage'], data['car_type'], data['small_car'], data['hybrid'])
 
     else:
         form = NameForm()

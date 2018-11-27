@@ -11,86 +11,6 @@ import pandas as pd
 import time
 # kmodes library: https://github.com/nicodv/kmodes
 from kmodes.kprototypes import KPrototypes
-'''
-pd.set_option('display.width', 500)
-pd.set_option('display.max_columns', 100)
-pd.set_option('display.notebook_repr_html', True)
-import seaborn as sns
-sns.set_style("whitegrid")
-sns.set_context("poster")
-
-df = pd.read_csv(os.path.dirname(os.path.realpath(__file__)) + '/datav2.csv', sep=',',na_values='?')
-df = df.dropna(subset = ['Price'])
-
-df['PRICE_RANK'] = df['Price'].rank(ascending=True)
-luxury_weights = []
-for index, row in df.iterrows():
-    if row['PRICE_RANK'] < len(df.index)/3:
-        luxury_weights.append(0)
-    elif row['PRICE_RANK'] < 2*len(df.index)/3:
-        luxury_weights.append(1)
-    else:
-        luxury_weights.append(2)
-df = df.assign(luxury_weight=pd.Series(luxury_weights).values)
-
-
-
-demo = pd.read_csv(os.path.dirname(os.path.realpath(__file__)) + '/demo_data.csv', sep=',',na_values='?')
-age_approx = []
-for index, row in demo.iterrows():
-    if row['Age'][0]=='~':
-        age_approx.append('0')
-    else:
-        age_approx.append(row['Age'][0]+'0')
-
-demo = demo.assign(age_approx=pd.Series(age_approx).values)
-demo = demo.drop(demo[demo.age_approx == 'A0'].index)
-
-name_list = demo.columns.values
-for name in name_list[5:]:
-    demo[name] = pd.to_numeric(demo[name])
-
-unique_age = list(demo['age_approx'].unique())
-unique_gender = list(demo['Gender'].unique())
-table = {}
-for age in unique_age:
-    for gender in unique_gender:
-        table[(age, gender)] = {}
-for index, row in demo.iterrows():
-    num_list = []
-    for name in name_list[5:-1]:
-        num_list.append(row[name])
-    if row['Model'] in table[(row['age_approx'], row['Gender'])]:
-        table[(row['age_approx'], row['Gender'])][row['Model']] += num_list
-    else:
-        table[(row['age_approx'], row['Gender'])][row['Model']] = num_list
-for age_gender, value in table.items():
-    for model, num_list in value.items():
-        table[age_gender][model] = np.mean(table[age_gender][model])
-
-for age_gender, value in table.items():
-    new_dict = value.copy()
-    for model, tot in table[age_gender].items():
-        if not model in list(df['Model']):
-            new_dict.pop(model, None)
-    table[age_gender] = new_dict
-
-for age_gender, value in table.items():
-    table[age_gender] = list(table[age_gender].items())
-
-from operator import itemgetter
-for age_gender, value in table.items():
-    sorted_scores = sorted(value, key=itemgetter(1))
-    new_dict = {}
-    for i in range(len(sorted_scores)):
-        if i <= len(sorted_scores)//3:
-            new_dict[sorted_scores[i][0]] = 0
-        elif i <= 2*len(sorted_scores)//3:
-            new_dict[sorted_scores[i][0]] = 1
-        else:
-            new_dict[sorted_scores[i][0]] = 2
-    table[age_gender] = new_dict
-'''
 
 
 def second_stage(df, age1, gender, brand, table):
@@ -111,6 +31,7 @@ def second_stage(df, age1, gender, brand, table):
     """
     filtered = None
     scores = []
+    print("hello", table[(int(age1),gender)])
     for index, row in df.iterrows():
         score = 0
         if row['Model'] in table[(int(age1),gender)]:
@@ -122,7 +43,9 @@ def second_stage(df, age1, gender, brand, table):
             score += row['luxury_weight']
         scores.append(score)
     df = df.assign(scores=pd.Series(scores).values)
+    print("DATAFIELD: ", df)
     filtered = df.nlargest(int(1/2*len(df.index)), 'scores', 'first')
+    print("FILTERED: ", filtered)
     return filtered
 
 
@@ -143,7 +66,7 @@ def third_stage(df, wage, car_type, small_car, hybrid):
     - hybrid: string, 'X' or 'O'
     """
     # According to Weiting's suggestion
-    if wage == '15':
+    if wage == '0-15':
         budget = 1500/2
     elif wage == '15-30':
         budget = (4000+1500)/2
@@ -168,5 +91,5 @@ def third_stage(df, wage, car_type, small_car, hybrid):
     fil_mask = fil_mask[fil_mask.cluster==labels[0]].drop(axis=1, columns='cluster')
 
     num_rec = 3 # JUST NEED TO SPECIFY THE NUMBER OF RECOMMENDATIONS HERE
-
+    print("FINAL: ", fil_mask)
     return fil_mask.nlargest(num_rec, 'scores', 'first')
