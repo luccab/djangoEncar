@@ -1,32 +1,34 @@
-from django.shortcuts import render
-from django.views import generic
-from django.shortcuts import get_object_or_404, render
-from django.shortcuts import render_to_response
-import os
-import pandas as pd
-# Create your views here.
-from django.http import HttpResponse
-from django.http import HttpResponseRedirect
+
+# django
+from django.http import HttpResponse, HttpResponseRedirect
+from django.shortcuts import render, render_to_response
+
+from operator import itemgetter
+
+# app
 from .forms import NameForm
+from .models import Person
 import apps.algo
 
 import numpy as np
 import os
 import scipy as sp
-import matplotlib as mpl
-import matplotlib.cm as cm
-import matplotlib.pyplot as plt
+# import matplotlib as mpl
+# import matplotlib.cm as cm
+# import matplotlib.pyplot as plt
 import pandas as pd
-import time
+# import time
+import seaborn as sns
 # kmodes library: https://github.com/nicodv/kmodes
-from kmodes.kprototypes import KPrototypes
+# from kmodes.totypes import KPrototypes
 
 pd.set_option('display.width', 500)
 pd.set_option('display.max_columns', 100)
 pd.set_option('display.notebook_repr_html', True)
-import seaborn as sns
+
 sns.set_style("whitegrid")
 sns.set_context("poster")
+
 
 df = pd.read_csv(os.path.dirname(os.path.realpath(__file__)) + '/datav2.csv', sep=',',na_values='?')
 df = df.dropna(subset = ['Price'])
@@ -43,6 +45,24 @@ for index, row in df.iterrows():
 df = df.assign(luxury_weight=pd.Series(luxury_weights).values)
 
 
+'''
+df = pd.read_csv(os.path.dirname(os.path.realpath(__file__)) + '/datav2.csv', sep=',',na_values='?')
+df.head(10)
+
+df = df.dropna(subset = ['Age', 'Gender','Country', 'Price','Car type','EV/Hybrid available'])
+df = df.dropna(subset = ['Price'])
+
+df['PRICE_RANK'] = df['Price'].rank(ascending=True)
+luxury_weights = []
+for index, row in df.iterrows():
+    if row['PRICE_RANK'] < len(df.index)/3:
+        luxury_weights.append(0)
+    elif row['PRICE_RANK'] < 2*len(df.index)/3:
+        luxury_weights.append(1)
+    else:
+        luxury_weights.append(2)
+df = df.assign(luxury_weight=pd.Series(luxury_weights).values)
+'''
 
 demo = pd.read_csv(os.path.dirname(os.path.realpath(__file__)) + '/demo_data.csv', sep=',',na_values='?')
 age_approx = []
@@ -87,7 +107,7 @@ for age_gender, value in table.items():
 for age_gender, value in table.items():
     table[age_gender] = list(table[age_gender].items())
 
-from operator import itemgetter
+
 for age_gender, value in table.items():
     sorted_scores = sorted(value, key=itemgetter(1))
     new_dict = {}
@@ -101,24 +121,7 @@ for age_gender, value in table.items():
     table[age_gender] = new_dict
 
 
-'''
-df = pd.read_csv(os.path.dirname(os.path.realpath(__file__)) + '/datav2.csv', sep=',',na_values='?')
-df.head(10)
 
-df = df.dropna(subset = ['Age', 'Gender','Country', 'Price','Car type','EV/Hybrid available'])
-df = df.dropna(subset = ['Price'])
-
-df['PRICE_RANK'] = df['Price'].rank(ascending=True)
-luxury_weights = []
-for index, row in df.iterrows():
-    if row['PRICE_RANK'] < len(df.index)/3:
-        luxury_weights.append(0)
-    elif row['PRICE_RANK'] < 2*len(df.index)/3:
-        luxury_weights.append(1)
-    else:
-        luxury_weights.append(2)
-df = df.assign(luxury_weight=pd.Series(luxury_weights).values)
-'''
 
 def index(request):
     return HttpResponse("Hello, world.")
@@ -147,8 +150,6 @@ def get_data(request):
             aspiration = data['aspiration'].split(',')
             '''
 
-
-
             fil2 = apps.algo.second_stage(df, data['age'][0], data['gender'][0], data['brand'][0], table)
 
             fil3 = apps.algo.third_stage(fil2, data['wage'][0], data['car_type'][0], data['small_car'][0], data['hybrid'][0])
@@ -156,11 +157,3 @@ def get_data(request):
     else:
         form = NameForm()
     return HttpResponse(fil3.to_html())
-
-
-from django.views.generic import CreateView
-from .models import Person
-
-class PersonCreateView(CreateView):
-    model = Person
-    fields = ('name', 'email', 'job_title', 'bio')
