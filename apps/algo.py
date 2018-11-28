@@ -11,6 +11,7 @@ import pandas as pd
 import time
 # kmodes library: https://github.com/nicodv/kmodes
 from kmodes.kprototypes import KPrototypes
+from kmodes.kmodes import KModes
 
 
 def second_stage(df, age, gender, brand, wage, table):
@@ -31,7 +32,7 @@ def second_stage(df, age, gender, brand, wage, table):
     """
     filtered = None
     scores = []
-    print("hello", table[(int(age),gender)])
+    # print("hello", table[(int(age),gender)])
     for index, row in df.iterrows():
         score = 0
         if row['Model'] in table[(int(age),gender)]:
@@ -43,7 +44,7 @@ def second_stage(df, age, gender, brand, wage, table):
 
         scores.append(score)
     df = df.assign(scores=pd.Series(scores).values)
-    print("DATAFIELD: ", df)
+    # print("DATAFIELD: ", df)
     filtered = df.nlargest(int(1/2*len(df.index)), 'scores', 'first')
     print("FILTERED: ", filtered)
     return filtered
@@ -65,6 +66,7 @@ def third_stage(df, wage, car_type, small_car, hybrid):
     - small_car: string, either 'SMALL/COMPACT', 'MIDDLE', or 'BIG'
     - hybrid: string, 'X' or 'O'
     """
+    [1, 0 , 0]
     # According to Weiting's suggestion
     if wage == '0-15':
         budget = 1500/2
@@ -75,25 +77,42 @@ def third_stage(df, wage, car_type, small_car, hybrid):
     elif wage == '60':
         budget = (16931+7000)/2
 
-    X_train = df[['Price','Car type', 'EV/Hybrid available' ]].values
+    X_train = df[['Car type', 'EV/Hybrid available' ]].values
     print("X_train: ", X_train)
-    kproto = KPrototypes(n_clusters=5, init='Huang', verbose=0)
+    kproto = KModes(n_clusters=5, init='Huang', verbose=0)
+    print("kproto: ", kproto)
     clusters = kproto.fit(X_train, categorical=[1,2]).labels_
+    print("clusters: ", clusters)
     if car_type != 'NORMAL':
         net_car_type = car_type
     else:
         net_car_type = small_car
-    X_test = np.array([[budget, net_car_type, hybrid]])
+    X_test = np.array([[net_car_type, hybrid]])
     X_df =  pd.DataFrame(X_test)
-    X_df[[0]]=X_df[[0]].astype('float')
+    # X_df[[0]]=X_df[[0]].astype('float')
     X_test = X_df.values
+    print("X_test:", X_test)
     labels = kproto.predict(X_test, categorical=[1,2])
+    print("LABELS: ", labels)
     fil_mask = df.assign(cluster=clusters)
-    fil_mask = fil_mask[fil_mask.cluster==labels[0]].drop(axis=1, columns='cluster')
+    print("FIL_MASK: ", fil_mask)
+    print('Labels[0]: ', labels[0])
+    # fil_mask = fil_mask[fil_mask.cluster==labels[0]].drop(columns='cluster')
+    bonus_scores = []
+    for index, row in fil_mask.iterrows():
+        score = 0
+        if row['cluster'] == labels[0]:
+            score = row['scores'] + 20
+        else:
+            score = row['scores']
+        bonus_scores.append(score)
+    print('bonus_scores: ', bonus_scores)
+    fil_mask = fil_mask.assign(total_scores=pd.Series(bonus_scores).values)
 
+    print("FIL_MASK2: ", fil_mask)
     # print("FINAL: ", fil_mask)
     num_rec = 10 # JUST NEED TO SPECIFY THE NUMBER OF RECOMMENDATIONS HERE
-    return df.nlargest(num_rec, 'scores', 'first')
+    return fil_mask.nlargest(num_rec, 'total_scores', 'first')
 
 
 def get_budget_price_difference(wage, price):

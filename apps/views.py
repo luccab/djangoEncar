@@ -51,7 +51,7 @@ demo = demo.drop(demo[demo.age_approx == 'A0'].index)
 
 
 name_list = demo.columns.values
-print('NAME LIST:', name_list)
+# print('NAME LIST:', name_list)
 for name in name_list[5:]:
     demo[name] = pd.to_numeric(demo[name])
 unique_age = list(demo['age_approx'].unique())
@@ -80,8 +80,8 @@ for age_gender, value in table.items():
         if not model in list(df['Model']):
             new_dict.pop(model, None)
     table[age_gender] = list(new_dict.items())
-    print(age_gender, "=========")
-    print(sorted(new_dict.items(), key=lambda kv: kv[1], reverse=True))
+    # print(age_gender, "=========")
+    # print(sorted(new_dict.items(), key=lambda kv: kv[1], reverse=True))
 
 
 

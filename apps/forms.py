@@ -36,31 +36,3 @@ class NameForm(forms.Form):
     environment_groups = (('X','텀블러에 따라 마신다(+points for EV/Hybrid)'),
                 ('O','종이컵에 따라 마신다'))
     hybrid = forms.ChoiceField(label='커피를 마실 때 나는', choices=environment_groups, widget=forms.RadioSelect())
-
-
-
-    '''
-    num_of_doors = forms.CharField(label='Brand', help_text='Enter two numbers, \
-    separated by comma')
-    num_of_doors = forms.CharField(label='Brand', help_text='Enter two numbers, \
-    separated by comma')
-    aspiration = forms.CharField(label='Wage')
-    highway_mpg = forms.CharField(label='Highway mpg',help_text='Enter two numbers, \
-    separated by comma' )
-    city_mpg = forms.CharField(label='city_mpg',help_text='Enter two numbers, \
-    separated by comma')
-    horsepower = forms.CharField(label='horsepower',help_text='Enter two numbers, \
-    separated by comma')
-    body_style = forms.CharField(label='body style')
-    '''
-
-
-
-
-
-
-
-
-
-    # data = self.cleaned_data
-    # return data
