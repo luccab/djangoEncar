@@ -1,0 +1,259 @@
+{% load static %}
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+  <link rel="stylesheet" href="{% static 'swiper.min.css' %}">
+  <title>나에게 맞는 차 찾기</title>
+  <style>
+    header {
+      height: 100px;
+      line-height: 100px;
+      background: #D30000;
+      text-align:center;
+      font-size: 25px;
+      color:white;
+      position: fixed;
+      top: 0px;
+      left:0px;
+      width: 100%;
+      z-index: 1000;
+    }
+    .marginTop {
+      margin-top:100px;
+    }
+    .car-image {
+      min-width:200px;
+      max-width:70%;
+      display: block;
+      margin-left: auto;
+      margin-right: auto;
+      margin-top: 5%;
+    }
+    .align-center {
+      margin-left: auto;
+      margin-right: auto;
+      display: block;
+      width: 80%;
+      text-align: center;
+    }
+  </style>
+
+</head>
+<body>
+  <header>
+    SK엔카닷컴 X Minerva School
+  </header>
+  <div class="container">
+    <div class="row justify-content-center">
+      <div class="col-12">
+
+        <div id="carousel-example-generic" class="carousel slide" data-ride="carousel">
+          <!-- Indicators -->
+          <ol class="carousel-indicators">
+            <li data-target="#carousel-example-generic" data-slide-to="0" class="active"></li>
+            <li data-target="#carousel-example-generic" data-slide-to="1"></li>
+            <li data-target="#carousel-example-generic" data-slide-to="2"></li>
+          </ol>
+
+          <!-- Wrapper for slides -->
+          <div class="carousel-inner" role="listbox">
+            <div class="item active">
+              <div class="carousel-caption">
+                hello
+              </div>
+            </div>
+            <div class="item">
+              <div class="carousel-caption">
+                world
+              </div>
+            </div>
+          </div>
+
+          <!-- Controls -->
+          <a class="left carousel-control" href="#carousel-example-generic" role="button" data-slide="prev">
+            <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+            <span class="sr-only">Previous</span>
+          </a>
+          <a class="right carousel-control" href="#carousel-example-generic" role="button" data-slide="next">
+            <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+            <span class="sr-only">Next</span>
+          </a>
+        </div>
+
+        <form action="get_data" method="post">
+          <fieldset>
+            {% csrf_token %}
+            <div class="swiper-container">
+              <div class="swiper-wrapper">
+                <div class="swiper-slide">
+                  <img class="img-responsive car-image" src="{% static 'images/cars.png' %}" alt="car">
+                  <h3 class="align-center">나에게 맞는 차는 무엇일까?</h3>
+                  <h5 class="align-center">이곳에는 더미 텍스트가 들어갈 예정입니다.<br>약 두줄 정도 들어가면 적절합니다.</h5>
+                  <button onclick="next()">시작하기</button>
+                </div>
+                <div class="swiper-slide">
+                  <label for="id_age_0">"머리부터 발끝까지" 뒤에 나오는 말은?</label><ul id="id_age">
+                    <li><label for="id_age_0"><input type="radio" name="age" value="10" id="id_age_0" required="">
+                      전부 다 쩌 쩔어(10s)</label>
+
+                    </li>
+                    <li><label for="id_age_1"><input type="radio" name="age" value="20" id="id_age_1" required="">
+                      오로나민씨(20s)</label>
+
+                    </li>
+                    <li><label for="id_age_2"><input type="radio" name="age" value="30" id="id_age_2" required="">
+                      핫이슈(30s)</label>
+
+                    </li>
+                    <li><label for="id_age_3"><input type="radio" name="age" value="40" id="id_age_3" required="">
+                      다 사랑스러워(40s)</label>
+
+                    </li>
+                  </ul>
+                </div>
+                <div class="swiper-slide">
+                  <label for="id_gender_0">당신의 성별은?</label>
+                  <ul id="id_gender">
+                    <li><label for="id_gender_0"><input type="radio" name="gender" value="M" id="id_gender_0" required="">
+                      M</label>
+
+                    </li>
+                    <li><label for="id_gender_1"><input type="radio" name="gender" value="F" id="id_gender_1" required="">
+                      F</label>
+
+                    </li>
+                  </ul>
+                </div>
+                <div class="swiper-slide">
+                  <label for="id_wage_0">내가 만약 하루 슈퍼 히어로의 삶을 살게 된다면 누구의 삶을 살까?</label>
+                  <ul id="id_wage">
+                    <li><label for="id_wage_0"><input type="radio" name="wage" value="0-15" id="id_wage_0" required="">
+                      스파이더맨(~15mil)</label>
+
+                    </li>
+                    <li><label for="id_wage_1"><input type="radio" name="wage" value="15-30" id="id_wage_1" required="">
+                      캡틴아메리카(15~30mil)</label>
+
+                    </li>
+                    <li><label for="id_wage_2"><input type="radio" name="wage" value="30-60" id="id_wage_2" required="">
+                      아이언맨(30~60mil)</label>
+
+                    </li>
+                    <li><label for="id_wage_3"><input type="radio" name="wage" value="60" id="id_wage_3" required="">
+                      배트맨(60mil~)</label>
+
+                    </li>
+                  </ul>
+                </div>
+                <div class="swiper-slide">
+                  <label for="id_brand_0">내게 순간이동 능력이 있다면, 금요일 뜨거운 밤을 보내고 싶은 곳은?</label><ul id="id_brand">
+                    <li><label for="id_brand_0"><input type="radio" name="brand" value="Germany" id="id_brand_0" required="">
+                      옥토버페스트에서 살얼음잔에 담긴 시원한 맥주, 그릴에 익힌 소시지와 함께(Germany)</label>
+
+                    </li>
+                    <li><label for="id_brand_1"><input type="radio" name="brand" value="Korea" id="id_brand_1" required="">
+                      전주 한옥마을을 거닐며 파전과 막걸리 한 잔(Korea)</label>
+
+                    </li>
+                    <li><label for="id_brand_2"><input type="radio" name="brand" value="Japan" id="id_brand_2" required="">
+                      일본 삿포로에서 불에 살짝 구운 타타키와 시원한 사케(Japan)</label>
+
+                    </li>
+                    <li><label for="id_brand_3"><input type="radio" name="brand" value="USA" id="id_brand_3" required="">
+                      라스베가스에서 승부수를 던지며 위스키 온더락 한 잔(USA)</label>
+
+                    </li>
+                    <li><label for="id_brand_4"><input type="radio" name="brand" value="UK" id="id_brand_4" required="">
+                      런던에서 시원한 맥주와 함께 즐기는 프리미어 리그!(UK)</label>
+
+                    </li>
+                  </ul>
+                </div>
+                <div class="swiper-slide">
+                  <label for="id_car_type_0">차를 몰고 있는 나의 모습을 상상했을 때 가장 좋을 것 같은 드라이브 경험은?</label><ul id="id_car_type">
+                    <li><label for="id_car_type_0"><input type="radio" name="car_type" value="NORMAL" id="id_car_type_0" required="">
+                      마음이 편안해지는 노래와 함께 도시 이곳 저곳을 드라이브(normal)</label>
+
+                    </li>
+                    <li><label for="id_car_type_1"><input type="radio" name="car_type" value="SUV/RV" id="id_car_type_1" required="">
+                      연인 또는 가족과 함께 담소를 나누며 캠핑 장소로(SUV/RV)</label>
+
+                    </li>
+                    <li><label for="id_car_type_2"><input type="radio" name="car_type" value="SPORT" id="id_car_type_2" required="">
+                      뻥 뚫린 고속도로를 시원하게 달리는(Sport)</label>
+
+                    </li>
+                  </ul>
+                </div>
+                <div class="swiper-slide">
+                  <label for="id_small_car_0">나는 주차를:</label><ul id="id_small_car">
+                    <li><label for="id_small_car_0"><input type="radio" name="small_car" value="BIG" id="id_small_car_0" required="">
+                      잘 한다(big)</label>
+
+                    </li>
+                    <li><label for="id_small_car_1"><input type="radio" name="small_car" value="MIDDLE" id="id_small_car_1" required="">
+                      할 줄은 안다(middle)</label>
+
+                    </li>
+                    <li><label for="id_small_car_2"><input type="radio" name="small_car" value="SMALL/COMPACT" id="id_small_car_2" required="">
+                      잘 못한다(+ points for small / compact car)</label>
+
+                    </li>
+                  </ul>
+                </div>
+                <div class="swiper-slide">
+                  <label for="id_hybrid_0">커피를 마실 때 나는:</label><ul id="id_hybrid">
+                    <li><label for="id_hybrid_0"><input type="radio" name="hybrid" value="X" id="id_hybrid_0" required="">
+                      텀블러에 따라 마신다(+points for EV/Hybrid)</label>
+
+                    </li>
+                    <li><label for="id_hybrid_1"><input type="radio" name="hybrid" value="O" id="id_hybrid_1" required="">
+                      종이컵에 따라 마신다</label>
+
+                    </li>
+                  </ul>
+                  <input type="submit" class="btn btn-primary" value="Submit">
+                </div>
+              </div>
+              <!-- Add Pagination -->
+              <div class="swiper-pagination"></div>
+            </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+          </fieldset>
+        </form>
+
+      </div>
+    </div>
+  </div>
+  <script src="{% static 'jquery.min.js' %}"></script>
+  <script src="{% static 'bootstrap-4.1.3-dist/js/bootstrap.min.js' %}"></script>
+  <script src="{% static 'swiper.min.js' %}"></script>
+  <script>
+    var swiper = new Swiper('.swiper-container', {
+      direction: 'vertical',
+      pagination: {
+        el: '.swiper-pagination',
+        clickable: true,
+      },
+    });
+    function next() {
+      swiper.slideNext();
+    }
+  </script>
+</body>
+</html>
