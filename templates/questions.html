@@ -5,41 +5,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
-  <link rel="stylesheet" href="{% static 'swiper.min.css' %}">
+  <link rel="stylesheet" href="{% static 'apps/questions.css' %}">
   <title>나에게 맞는 차 찾기</title>
-  <style>
-    header {
-      height: 100px;
-      line-height: 100px;
-      background: #D30000;
-      text-align:center;
-      font-size: 25px;
-      color:white;
-      position: fixed;
-      top: 0px;
-      left:0px;
-      width: 100%;
-      z-index: 1000;
-    }
-    .marginTop {
-      margin-top:100px;
-    }
-    .car-image {
-      min-width:200px;
-      max-width:70%;
-      display: block;
-      margin-left: auto;
-      margin-right: auto;
-      margin-top: 5%;
-    }
-    .align-center {
-      margin-left: auto;
-      margin-right: auto;
-      display: block;
-      width: 80%;
-      text-align: center;
-    }
-  </style>
 
 </head>
 <body>
@@ -50,39 +17,6 @@
     <div class="row justify-content-center">
       <div class="col-12">
 
-        <div id="carousel-example-generic" class="carousel slide" data-ride="carousel">
-          <!-- Indicators -->
-          <ol class="carousel-indicators">
-            <li data-target="#carousel-example-generic" data-slide-to="0" class="active"></li>
-            <li data-target="#carousel-example-generic" data-slide-to="1"></li>
-            <li data-target="#carousel-example-generic" data-slide-to="2"></li>
-          </ol>
-
-          <!-- Wrapper for slides -->
-          <div class="carousel-inner" role="listbox">
-            <div class="item active">
-              <div class="carousel-caption">
-                hello
-              </div>
-            </div>
-            <div class="item">
-              <div class="carousel-caption">
-                world
-              </div>
-            </div>
-          </div>
-
-          <!-- Controls -->
-          <a class="left carousel-control" href="#carousel-example-generic" role="button" data-slide="prev">
-            <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
-            <span class="sr-only">Previous</span>
-          </a>
-          <a class="right carousel-control" href="#carousel-example-generic" role="button" data-slide="next">
-            <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
-            <span class="sr-only">Next</span>
-          </a>
-        </div>
-
         <form action="get_data" method="post">
           <fieldset>
             {% csrf_token %}
@@ -90,8 +24,8 @@
               <div class="swiper-wrapper">
                 <div class="swiper-slide">
                   <img class="img-responsive car-image" src="{% static 'images/cars.png' %}" alt="car">
-                  <h3 class="align-center">나에게 맞는 차는 무엇일까?</h3>
-                  <h5 class="align-center">이곳에는 더미 텍스트가 들어갈 예정입니다.<br>약 두줄 정도 들어가면 적절합니다.</h5>
+                  <h3 class="align-center main-title">나에게 맞는 차는 무엇일까?</h3>
+                  <h6 class="align-center main-desc">나는 너를 알고 있다! 당신도 몰랐던 숨겨진 취향<br>엔카가 찾아드려요</h6>
                   <button onclick="next()">시작하기</button>
                 </div>
                 <div class="swiper-slide">
@@ -242,18 +176,19 @@
   </div>
   <script src="{% static 'jquery.min.js' %}"></script>
   <script src="{% static 'bootstrap-4.1.3-dist/js/bootstrap.min.js' %}"></script>
-  <script src="{% static 'swiper.min.js' %}"></script>
   <script>
-    var swiper = new Swiper('.swiper-container', {
-      direction: 'vertical',
-      pagination: {
-        el: '.swiper-pagination',
-        clickable: true,
-      },
-    });
-    function next() {
-      swiper.slideNext();
-    }
+    // var swiper = new Swiper('.swiper-container', {
+    //   direction: 'vertical',
+    //   pagination: {
+    //     el: '.swiper-pagination',
+    //     clickable: true,
+    //   },
+    //   autoHeight: true,
+    // });
+    // function next() {
+    //   swiper.slideNext();
+    // }
+
   </script>
 </body>
 </html>

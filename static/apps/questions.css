@@ -1,0 +1,42 @@
+header {
+  height: 70px;
+  line-height: 70px;
+  background: #D30000;
+  text-align:center;
+  font-size: 25px;
+  color:white;
+  position: fixed;
+  top: 0px;
+  left:0px;
+  width: 100%;
+  z-index: 1000;
+}
+.marginTop {
+  margin-top:70px;
+}
+.car-image {
+  min-width:200px;
+  max-width:60%;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 5%;
+}
+.align-center {
+  margin-left: auto;
+  margin-right: auto;
+  display: block;
+  width: 80%;
+  text-align: center;
+}
+.main-title {
+  color: #DE0000;
+  font-weight: bolder;
+}
+.main-desc {
+  font-size: 0.8rem !important;
+  color: #DE0000;
+}
+.swiper-slide {
+  margin-top: 30%;
+}
