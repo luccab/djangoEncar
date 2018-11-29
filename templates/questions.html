@@ -17,156 +17,101 @@
     <div class="row justify-content-center">
       <div class="col-12">
 
-        <form action="get_data" method="post">
+        <form id="form" action="get_data" method="post">
           <fieldset>
             {% csrf_token %}
             <div class="swiper-container">
               <div class="swiper-wrapper">
-                <div class="swiper-slide">
+                <div id="page1" class="swiper-slide">
                   <img class="img-responsive car-image" src="{% static 'images/cars.png' %}" alt="car">
-                  <h3 class="align-center main-title">나에게 맞는 차는 무엇일까?</h3>
-                  <h6 class="align-center main-desc">나는 너를 알고 있다! 당신도 몰랐던 숨겨진 취향<br>엔카가 찾아드려요</h6>
-                  <button onclick="next()">시작하기</button>
+                  <h3 class="center main-title">나에게 맞는 차는 무엇일까?</h3>
+                  <h6 class="center main-desc">나는 너를 알고 있다! 당신도 몰랐던 숨겨진 취향<br>엔카가 찾아드려요</h6>
+                  <button type="button" class="center result-btn" onclick="next()">1분만에 찾아보기!</button>
                 </div>
-                <div class="swiper-slide">
-                  <label for="id_age_0">"머리부터 발끝까지" 뒤에 나오는 말은?</label><ul id="id_age">
-                    <li><label for="id_age_0"><input type="radio" name="age" value="10" id="id_age_0" required="">
-                      전부 다 쩌 쩔어(10s)</label>
-
-                    </li>
-                    <li><label for="id_age_1"><input type="radio" name="age" value="20" id="id_age_1" required="">
-                      오로나민씨(20s)</label>
-
-                    </li>
-                    <li><label for="id_age_2"><input type="radio" name="age" value="30" id="id_age_2" required="">
-                      핫이슈(30s)</label>
-
-                    </li>
-                    <li><label for="id_age_3"><input type="radio" name="age" value="40" id="id_age_3" required="">
-                      다 사랑스러워(40s)</label>
-
-                    </li>
-                  </ul>
+                <div id="page2" class="swiper-slide box">
+                  <span class="question-label center">질문 1</span>
+                  <label class="question-title center" for="id_age_0">"머리부터 발끝까지" 뒤에 나오는 말은?</label>
+                  <img class="icon center" src="{% static 'images/q1.png' %}" alt="">
+                  <div class="button-group">
+                    <button type="button" class="option q1-btn" name="button" onclick="answer1('10')"><span class="option-number">1</span>전부 다 쩌 쩔어</button>
+                    <button type="button" class="option q1-btn" name="button" onclick="answer1('20')"><span class="option-number">2</span>오로나민씨</button>
+                    <button type="button" class="option q1-btn" name="button" onclick="answer1('30')"><span class="option-number">3</span>핫이슈</button>
+                    <button type="button" class="option q1-btn" name="button" onclick="answer1('40')"><span class="option-number">4</span>다 사랑스러워</button>
+                    <input id="id_age_0" type="hidden" name="age" value="">
+                  </div>
                 </div>
-                <div class="swiper-slide">
-                  <label for="id_gender_0">당신의 성별은?</label>
-                  <ul id="id_gender">
-                    <li><label for="id_gender_0"><input type="radio" name="gender" value="M" id="id_gender_0" required="">
-                      M</label>
+                <div id="page3" class="swiper-slide box">
 
-                    </li>
-                    <li><label for="id_gender_1"><input type="radio" name="gender" value="F" id="id_gender_1" required="">
-                      F</label>
+                  <span class="question-label center">질문 2</span>
+                  <label class="question-title center" for="id_gender_0">당신의 성별은?</label>
+                  <img class="icon center" src="{% static 'images/q2.png' %}" alt="">
+                  <div class="button-group">
+                    <button type="button" class="option q2-btn" name="button" onclick="answer2('M')"><span class="option-number">1</span>남성</button>
+                    <button type="button" class="option q2-btn" name="button" onclick="answer2('F')"><span class="option-number">2</span>여성</button>
+                    <input id="id_gender_0" type="hidden" name="gender" value="">
+                  </div>
 
-                    </li>
-                  </ul>
                 </div>
-                <div class="swiper-slide">
-                  <label for="id_wage_0">내가 만약 하루 슈퍼 히어로의 삶을 살게 된다면 누구의 삶을 살까?</label>
-                  <ul id="id_wage">
-                    <li><label for="id_wage_0"><input type="radio" name="wage" value="0-15" id="id_wage_0" required="">
-                      스파이더맨(~15mil)</label>
-
-                    </li>
-                    <li><label for="id_wage_1"><input type="radio" name="wage" value="15-30" id="id_wage_1" required="">
-                      캡틴아메리카(15~30mil)</label>
-
-                    </li>
-                    <li><label for="id_wage_2"><input type="radio" name="wage" value="30-60" id="id_wage_2" required="">
-                      아이언맨(30~60mil)</label>
-
-                    </li>
-                    <li><label for="id_wage_3"><input type="radio" name="wage" value="60" id="id_wage_3" required="">
-                      배트맨(60mil~)</label>
-
-                    </li>
-                  </ul>
+                <div id="page4" class="swiper-slide box">
+                  <span class="question-label center">질문 3</span>
+                  <label class="question-title center" for="id_wage_0">내가 만약 하루 슈퍼 히어로의 삶을 살게 된다면 누구의 삶을 살까?</label>
+                  <img class="icon center" src="{% static 'images/q3.png' %}" alt="">
+                  <div class="button-group">
+                    <button type="button" class="option q3-btn" name="button" onclick="answer3('0-15')"><span class="option-number">1</span>스파이더맨</button>
+                    <button type="button" class="option q3-btn" name="button" onclick="answer3('15-30')"><span class="option-number">2</span>캡틴아메리카</button>
+                    <button type="button" class="option q3-btn" name="button" onclick="answer3('30-60')"><span class="option-number">3</span>아이언맨</button>
+                    <button type="button" class="option q3-btn" name="button" onclick="answer3('60')"><span class="option-number">4</span>배트맨</button>
+                    <input id="id_wage_0" type="hidden" name="wage" value="">
+                  </div>
                 </div>
-                <div class="swiper-slide">
-                  <label for="id_brand_0">내게 순간이동 능력이 있다면, 금요일 뜨거운 밤을 보내고 싶은 곳은?</label><ul id="id_brand">
-                    <li><label for="id_brand_0"><input type="radio" name="brand" value="Germany" id="id_brand_0" required="">
-                      옥토버페스트에서 살얼음잔에 담긴 시원한 맥주, 그릴에 익힌 소시지와 함께(Germany)</label>
-
-                    </li>
-                    <li><label for="id_brand_1"><input type="radio" name="brand" value="Korea" id="id_brand_1" required="">
-                      전주 한옥마을을 거닐며 파전과 막걸리 한 잔(Korea)</label>
-
-                    </li>
-                    <li><label for="id_brand_2"><input type="radio" name="brand" value="Japan" id="id_brand_2" required="">
-                      일본 삿포로에서 불에 살짝 구운 타타키와 시원한 사케(Japan)</label>
-
-                    </li>
-                    <li><label for="id_brand_3"><input type="radio" name="brand" value="USA" id="id_brand_3" required="">
-                      라스베가스에서 승부수를 던지며 위스키 온더락 한 잔(USA)</label>
-
-                    </li>
-                    <li><label for="id_brand_4"><input type="radio" name="brand" value="UK" id="id_brand_4" required="">
-                      런던에서 시원한 맥주와 함께 즐기는 프리미어 리그!(UK)</label>
-
-                    </li>
-                  </ul>
+                <div id="page5" class="swiper-slide box">
+                  <span class="question-label center">질문 4</span>
+                  <label class="question-title center" for="id_brand_0">내게 순간이동 능력이 있다면, 금요일 뜨거운 밤을 보내고 싶은 곳은?</label>
+                  <img class="icon center" src="{% static 'images/q4.png' %}" alt="">
+                  <div class="button-group">
+                    <button type="button" class="option q4-btn" name="button" onclick="answer4('Germany')"><span class="option-number">1</span>옥토버페스트에서 살얼음잔에 담긴 시원한 맥주, 그릴에 익힌 소시지와 함께</button>
+                    <button type="button" class="option q4-btn" name="button" onclick="answer4('Korea')"><span class="option-number">2</span>전주 한옥마을을 거닐며 파전과 막걸리 한 잔</button>
+                    <button type="button" class="option q4-btn" name="button" onclick="answer4('Japan')"><span class="option-number">3</span>일본 삿포로에서 불에 살짝 구운 타타키와 시원한 사케</button>
+                    <button type="button" class="option q4-btn" name="button" onclick="answer4('USA')"><span class="option-number">4</span>라스베가스에서 승부수를 던지며 위스키 온더락 한 잔</button>
+                    <button type="button" class="option q4-btn" name="button" onclick="answer4('UK')"><span class="option-number">5</span>런던에서 시원한 맥주와 함께 즐기는 프리미어 리그!</button>
+                    <input id="id_brand_0" type="hidden" name="brand" value="">
+                  </div>
                 </div>
-                <div class="swiper-slide">
-                  <label for="id_car_type_0">차를 몰고 있는 나의 모습을 상상했을 때 가장 좋을 것 같은 드라이브 경험은?</label><ul id="id_car_type">
-                    <li><label for="id_car_type_0"><input type="radio" name="car_type" value="NORMAL" id="id_car_type_0" required="">
-                      마음이 편안해지는 노래와 함께 도시 이곳 저곳을 드라이브(normal)</label>
-
-                    </li>
-                    <li><label for="id_car_type_1"><input type="radio" name="car_type" value="SUV/RV" id="id_car_type_1" required="">
-                      연인 또는 가족과 함께 담소를 나누며 캠핑 장소로(SUV/RV)</label>
-
-                    </li>
-                    <li><label for="id_car_type_2"><input type="radio" name="car_type" value="SPORT" id="id_car_type_2" required="">
-                      뻥 뚫린 고속도로를 시원하게 달리는(Sport)</label>
-
-                    </li>
-                  </ul>
+                <div id="page6" class="swiper-slide box">
+                  <span class="question-label center">질문 5</span>
+                  <label class="question-title center" for="id_car_type_0">차를 몰고 있는 나의 모습을 상상했을 때 가장 좋을 것 같은 드라이브 경험은?</label>
+                  <img class="icon center" src="{% static 'images/q5.png' %}" alt="">
+                  <div class="button-group">
+                    <button type="button" class="option q5-btn" name="button" onclick="answer5('NORMAL')"><span class="option-number">1</span>마음이 편안해지는 노래와 함께 도시 이곳 저곳을 드라이브</button>
+                    <button type="button" class="option q5-btn" name="button" onclick="answer5('SUV/RV')"><span class="option-number">2</span>연인 또는 가족과 함께 담소를 나누며 캠핑 장소로</button>
+                    <button type="button" class="option q5-btn" name="button" onclick="answer5('SPORT')"><span class="option-number">3</span>뻥 뚫린 고속도로를 시원하게 달리는</button>
+                    <input id="id_car_type_0" type="hidden" name="car_type" value="">
+                  </div>
                 </div>
-                <div class="swiper-slide">
-                  <label for="id_small_car_0">나는 주차를:</label><ul id="id_small_car">
-                    <li><label for="id_small_car_0"><input type="radio" name="small_car" value="BIG" id="id_small_car_0" required="">
-                      잘 한다(big)</label>
-
-                    </li>
-                    <li><label for="id_small_car_1"><input type="radio" name="small_car" value="MIDDLE" id="id_small_car_1" required="">
-                      할 줄은 안다(middle)</label>
-
-                    </li>
-                    <li><label for="id_small_car_2"><input type="radio" name="small_car" value="SMALL/COMPACT" id="id_small_car_2" required="">
-                      잘 못한다(+ points for small / compact car)</label>
-
-                    </li>
-                  </ul>
+                <div id="page7" class="swiper-slide box">
+                  <span class="question-label center">질문 6</span>
+                  <label class="question-title center" for="id_small_car_0">나는 주차를:</label>
+                  <img class="icon center" src="{% static 'images/q6.png' %}" alt="">
+                  <div class="button-group">
+                    <button type="button" class="option q6-btn" name="button" onclick="answer6('BIG')"><span class="option-number">1</span>잘 한다</button>
+                    <button type="button" class="option q6-btn" name="button" onclick="answer6('MIDDLE')"><span class="option-number">2</span>할 줄은 안다</button>
+                    <button type="button" class="option q6-btn" name="button" onclick="answer6('SMALL/COMPACT')"><span class="option-number">3</span>잘 못한다</button>
+                    <input id="id_small_car_0" type="hidden" name="small_car" value="">
+                  </div>
                 </div>
-                <div class="swiper-slide">
-                  <label for="id_hybrid_0">커피를 마실 때 나는:</label><ul id="id_hybrid">
-                    <li><label for="id_hybrid_0"><input type="radio" name="hybrid" value="X" id="id_hybrid_0" required="">
-                      텀블러에 따라 마신다(+points for EV/Hybrid)</label>
-
-                    </li>
-                    <li><label for="id_hybrid_1"><input type="radio" name="hybrid" value="O" id="id_hybrid_1" required="">
-                      종이컵에 따라 마신다</label>
-
-                    </li>
-                  </ul>
-                  <input type="submit" class="btn btn-primary" value="Submit">
+                <div id="page8" class="swiper-slide box">
+                  <span class="question-label center">질문 7</span>
+                  <label class="question-title center" for="id_hybrid_0">커피를 마실 때 나는:</label>
+                  <img class="icon center" src="{% static 'images/q7.png' %}" alt="">
+                  <div class="button-group">
+                    <button type="button" class="option q7-btn" name="button" onclick="answer7('X')"><span class="option-number">1</span>텀블러에 따라 마신다</button>
+                    <button type="button" class="option q7-btn" name="button" onclick="answer7('O')"><span class="option-number">2</span>종이컵에 따라 마신다</button>
+                    <input id="id_hybrid_0" type="hidden" name="hybrid" value="">
+                  </div>
                 </div>
+                <input id="submit-btn" type="button" class="btn result-btn center" value="결과보기">
               </div>
-              <!-- Add Pagination -->
-              <div class="swiper-pagination"></div>
             </div>
-
-
-
-
-
-
-
-
-
-
-
-
 
           </fieldset>
         </form>
@@ -177,17 +122,132 @@
   <script src="{% static 'jquery.min.js' %}"></script>
   <script src="{% static 'bootstrap-4.1.3-dist/js/bootstrap.min.js' %}"></script>
   <script>
-    // var swiper = new Swiper('.swiper-container', {
-    //   direction: 'vertical',
-    //   pagination: {
-    //     el: '.swiper-pagination',
-    //     clickable: true,
-    //   },
-    //   autoHeight: true,
-    // });
-    // function next() {
-    //   swiper.slideNext();
-    // }
+    function next(){
+      var target = $('#page2').offset().top - 120; //- (screen.height / 2) + ($('#page2').height());
+      $('html, body').animate({
+        scrollTop: target
+      }, 500);
+    }
+
+    function answer1(value){
+      var target = $('#page3').offset().top - 120;
+      $('html, body').animate({
+        scrollTop: target
+      }, 500);
+      $('#id_age_0').val(value);
+    }
+
+    $('.q1-btn').click(function(){
+      $('.q1-btn').removeClass('active');
+      $(this).addClass('active');
+    });
+
+    function answer2(value){
+      var target = $('#page4').offset().top - 120;
+      $('html, body').animate({
+        scrollTop: target
+      }, 500);
+      $('#id_gender_0').val(value);
+    }
+
+    $('.q2-btn').click(function(){
+      $('.q2-btn').removeClass('active');
+      $(this).addClass('active');
+    });
+
+    function answer3(value){
+      var target = $('#page5').offset().top - 120;
+      $('html, body').animate({
+        scrollTop: target
+      }, 500);
+      $('#id_wage_0').val(value);
+    }
+
+    $('.q3-btn').click(function(){
+      $('.q3-btn').removeClass('active');
+      $(this).addClass('active');
+    });
+
+    function answer4(value){
+      var target = $('#page6').offset().top - 120;
+      $('html, body').animate({
+        scrollTop: target
+      }, 500);
+      $('#id_brand_0').val(value);
+    }
+
+    $('.q4-btn').click(function(){
+      $('.q4-btn').removeClass('active');
+      $(this).addClass('active');
+    });
+
+    function answer5(value){
+      var target = $('#page7').offset().top - 120;
+      $('html, body').animate({
+        scrollTop: target
+      }, 500);
+      $('#id_car_type_0').val(value);
+    }
+
+    $('.q5-btn').click(function(){
+      $('.q5-btn').removeClass('active');
+      $(this).addClass('active');
+    });
+
+    function answer6(value){
+      var target = $('#page8').offset().top - 120;
+      $('html, body').animate({
+        scrollTop: target
+      }, 500);
+      $('#id_small_car_0').val(value);
+    }
+
+    $('.q6-btn').click(function(){
+      $('.q6-btn').removeClass('active');
+      $(this).addClass('active');
+    });
+
+    function answer7(value){
+      $('#id_hybrid_0').val(value);
+    }
+
+    $('.q7-btn').click(function(){
+      $('.q7-btn').removeClass('active');
+      $(this).addClass('active');
+    });
+
+    $('#submit-btn').click(function(){
+      if($('#id_age_0').val() == '') {
+        alert('선택하지 않은 문제가 있네요!');
+        return;
+      }
+      if($('#id_gender_0').val() == '') {
+        alert('선택하지 않은 문제가 있네요!');
+        return;
+      }
+      if($('#id_wage_0').val() == '') {
+        alert('선택하지 않은 문제가 있네요!');
+        return;
+      }
+      if($('#id_brand_0').val() == '') {
+        alert('선택하지 않은 문제가 있네요!');
+        return;
+      }
+      if($('#id_small_car_0').val() == '') {
+        alert('선택하지 않은 문제가 있네요!');
+        return;
+      }
+      if($('#id_car_type_0').val() == '') {
+        alert('선택하지 않은 문제가 있네요!');
+        return;
+      }
+      if($('#id_hybrid_0').val() == '') {
+        alert('선택하지 않은 문제가 있네요!');
+        return;
+      }
+
+      $('#form').submit();
+    });
 
   </script>
 </body>

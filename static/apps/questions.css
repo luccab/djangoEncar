@@ -22,7 +22,7 @@ header {
   margin-right: auto;
   margin-top: 5%;
 }
-.align-center {
+.center {
   margin-left: auto;
   margin-right: auto;
   display: block;
@@ -32,11 +32,146 @@ header {
 .main-title {
   color: #DE0000;
   font-weight: bolder;
+  font-size: 3em;
 }
 .main-desc {
-  font-size: 0.8rem !important;
+  font-size: 1.2rem !important;
   color: #DE0000;
 }
 .swiper-slide {
   margin-top: 30%;
+}
+.box {
+  background-color: #E5E5E5;
+  padding: 10%;
+  border-radius: 3em;
+}
+.question-label {
+  background-color: #B1B1B1;
+  padding: 10px 30px;
+  width:140px;
+  border-radius: 25px;
+  font-weight: bold;
+  color: white;
+  font-size: 1.2em;
+  margin-bottom: 15px;
+}
+.question-title {
+  color: #DE0000;
+  font-weight: bolder;
+  font-size: 2em;
+}
+li {
+  list-style-type: none;
+}
+.icon{
+  width:30%;
+}
+.option {
+  width:45%;
+  position: relative; /* parent of option number */
+  padding: 22px 35px;
+  background: none;
+  border: 1px solid #D30000;
+  border-radius: 10px;
+  margin:1.5%;
+  font-weight: bold;
+  color: #DE0000;
+}
+.option-number {
+  position: absolute;
+  left: 20px;
+  font-weight: bold;
+  color: #DE0000;
+}
+
+.option.active {
+  background: #D30000 !important;
+  color: white;
+}
+
+.button-group{
+  padding: 4%;
+}
+
+.result-btn {
+  background-image: linear-gradient(to right, #D30000 , #FF5800);
+  color: white;
+  width: 200px;
+  padding: 20px;
+  border-radius:50px;
+  margin-top: 7%;
+  margin-bottom:16%;
+}
+
+.result-title {
+  color: white;
+  font-weight: bolder;
+  padding-top: 60px;
+  font-size: 2.4em;
+}
+
+.result-desc {
+  color: white;
+  font-size: 1.3em;
+}
+
+.recom-container {
+  background: white;
+  border-radius: 50px;
+  overflow: hidden;
+}
+
+.recom-section {
+  padding-top: 5%;
+  padding-bottom: 5%;
+
+}
+.recom-section.odd {
+  background: #E5E5E5;
+}
+.cards {
+  padding-left: 17%;
+}
+.card {
+  border-radius: 12px;
+  overflow: hidden;
+  width:25%;
+  margin-left:10px;
+  margin-right:10px;
+  display: inline-block;
+}
+.card-model-name {
+  font-weight: bold;
+  font-size: 1.2em;
+}
+.card-model-desc {
+  display: block;
+}
+.card-price {
+  font-weight: bold;
+  color: #DE0000;
+}
+.card-img-top {
+  min-height: 165px;
+}
+a{
+  color:black;
+}
+
+.visit {
+  padding:20px;
+  font-size: 2em;
+  font-weight: bold;
+  background: white;
+  border-radius: 50px;
+  color: #DE0000;
+  margin-top: 30px;
+  margin-bottom: 30px;
+}
+
+@media only screen and (max-width: 768px) {
+  .option {
+    width:100%;
+  }
 }

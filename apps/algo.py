@@ -111,7 +111,7 @@ def third_stage(df, wage, car_type, small_car, hybrid):
 
     print("FIL_MASK2: ", fil_mask)
     # print("FINAL: ", fil_mask)
-    num_rec = 10 # JUST NEED TO SPECIFY THE NUMBER OF RECOMMENDATIONS HERE
+    num_rec = 5 # JUST NEED TO SPECIFY THE NUMBER OF RECOMMENDATIONS HERE
     return fil_mask.nlargest(num_rec, 'total_scores', 'first')
 
 

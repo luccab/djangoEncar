@@ -1,0 +1,123 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <link rel="stylesheet" href="{% static 'apps/questions.css' %}">
+    <title>나에게 맞는 차 찾기</title>
+  </head>
+  <body style="background:#A20000;">
+    <header>
+      SK엔카닷컴 X Minerva School
+    </header>
+    <div class="container marginTop">
+
+      <h1 class="center result-title">당신에게 맞는 차는 바로!!!</h1>
+      <h4 class="center result-desc">당신의 정보를 바탕으로 다음 5개의 모델을 추천드려요!</h4>
+      <div class="recom-container">
+
+
+        <div id="section1" class="recom-section odd">
+          <span class="question-label center">1위</span>
+          <h2 class="recom-name center">{{recom1}}</h2>
+          <input id="api_1" type="hidden" value="{{api_1}}">
+          <div id="card1" class="cards">
+          </div>
+        </div>
+        <div id="section2" class="recom-section">
+          <span class="question-label center">2위</span>
+          <h2 class="recom-name center">{{recom2}}</h2>
+          <input id="api_2" type="hidden" value="{{api_2}}">
+          <div id="card2" class="cards">
+          </div>
+        </div>
+        <div id="section3" class="recom-section odd">
+          <span class="question-label center">3위</span>
+          <h2 class="recom-name center">{{recom3}}</h2>
+          <input id="api_3" type="hidden" value="{{api_3}}">
+          <div id="card3" class="cards">
+          </div>
+        </div>
+        <div id="section4" class="recom-section">
+          <span class="question-label center">4위</span>
+          <h2 class="recom-name center">{{recom4}}</h2>
+          <input id="api_4" type="hidden" value="{{api_4}}">
+          <div id="card4" class="cards">
+          </div>
+        </div>
+        <div id="section5" class="recom-section odd">
+          <span class="question-label center">5위</span>
+          <h2 class="recom-name center">{{recom5}}</h2>
+          <input id="api_5" type="hidden" value="{{api_5}}">
+          <div id="card5" class="cards">
+          </div>
+        </div>
+      </div>
+
+      <a class="visit center" href="https://www.encar.com">SK엔카에서 더 많은 차 찾아보기</a>
+
+    </div>
+    <script src="{% static 'jquery.min.js' %}"></script>
+    <script src="{% static 'bootstrap-4.1.3-dist/js/bootstrap.min.js' %}"></script>
+    <script type="text/javascript">
+      $.get($('#api_1').val(), function(data){
+        var result = JSON.parse(JSON.stringify(data));
+        result.SearchResults.forEach(function(elem){
+          console.log(elem);
+          $('#card1').append(makeCard(elem));
+        });
+      });
+
+      $.get($('#api_2').val(), function(data){
+        var result = JSON.parse(JSON.stringify(data));
+        result.SearchResults.forEach(function(elem){
+          console.log(elem);
+          $('#card2').append(makeCard(elem));
+        });
+      });
+
+      $.get($('#api_3').val(), function(data){
+        var result = JSON.parse(JSON.stringify(data));
+        result.SearchResults.forEach(function(elem){
+          console.log(elem);
+          $('#card3').append(makeCard(elem));
+        });
+      });
+
+      $.get($('#api_4').val(), function(data){
+        var result = JSON.parse(JSON.stringify(data));
+        result.SearchResults.forEach(function(elem){
+          console.log(elem);
+          $('#card4').append(makeCard(elem));
+        });
+      });
+
+      $.get($('#api_5').val(), function(data){
+        var result = JSON.parse(JSON.stringify(data));
+        result.SearchResults.forEach(function(elem){
+          console.log(elem);
+          $('#card5').append(makeCard(elem));
+        });
+      });
+
+      function makeCard(elem){
+        var template = '<a href="http://www.encar.com/dc/dc_cardetailview.do?pageid=dc_carsearch&listAdvType=pic&carid='+elem.Id+'&wtClick_korList=015"><div class="card">'
+          +'<img class="card-img-top" src="http://ci.encar.com/carpicture'+elem.Photos[0].location+'" alt="">'
+          +'<div class="card-body">'
+            +'<span class="card-model-name">'+elem.Manufacturer+' '+elem.Model+'</span>'
+            +'<span class="card-model-desc">'+elem.Badge+'</span>'
+            +'<span class="card-price"></a>'+elem.Price+'만원</span></div></div>';
+        return template;
+      }
+
+      $('.card').click(function(){
+
+        var data = $(this).data('url');
+        console.log(data);
+      })
+    </script>
+  </body>
+</html>
